@@ -76,13 +76,13 @@ type OneNodeProps = {
   customStyle?: (value: any) => any;
 };
 
-const OneNode = ({
+const OneNode: React.FC<OneNodeProps> = ({
   startNode,
   endNode,
   passRef,
   isEnabled,
   customStyle,
-}: OneNodeProps) => {
+}) => {
   const [startNodeLayout, setStartNodeLayout] = useState<any>();
 
   const [endNodeLayout, setEndNodeLayout] = useState<any>();

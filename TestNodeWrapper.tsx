@@ -3,8 +3,8 @@ import { Children } from "react";
 
 type TestNodeProps = {
   onNode: (node: Node) => void;
-  children: React.ReactNode;
   shareId: string;
+  children: React.ReactNode;
 };
 
 export type Node = {
@@ -13,11 +13,11 @@ export type Node = {
   shareId: string;
 };
 
-export const TestNodeWrapper = ({
+export const TestNodeWrapper: React.FC<TestNodeProps> = ({
   onNode,
   children,
   shareId,
-}: TestNodeProps) => {
+}) => {
   const element = Children.only(children);
   const ref = useRef<any>();
 

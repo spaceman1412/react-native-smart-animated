@@ -1,1 +1,1 @@
-# react-native-shared-component
+# react-native-shared-element-component
