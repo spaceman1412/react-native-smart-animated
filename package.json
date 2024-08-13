@@ -1,6 +1,6 @@
 {
   "name": "react-native-shared-element-component",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "This is a shared element component that allow two component to animation between each other",
   "main": "index.ts",
   "scripts": {

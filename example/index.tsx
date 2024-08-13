@@ -8,20 +8,15 @@ import {
   Pressable,
   ScrollView,
   Image,
-  ViewProps,
-  StyleProp,
-  ViewStyle,
 } from "react-native";
-import Animated, {
-  AnimatedStyle,
-  MeasuredDimensions,
-  SharedTransition,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 
-import { TestNodeWrapper, Node, LayoutWrapper } from "../index";
+import {
+  TestNodeWrapper,
+  Node,
+  LayoutWrapper,
+  CustomStyleFunc,
+} from "../index";
 
 export default function HomeScreen() {
   return (
@@ -41,44 +36,12 @@ export default function HomeScreen() {
 
         <TodoItem />
         <View style={{ height: 10 }} />
-
-        <TodoItem />
-        <View style={{ height: 10 }} />
-
-        <TodoItem />
-        <View style={{ height: 10 }} />
-
-        <TodoItem />
       </ScrollView>
-      {/* </View> */}
     </SafeAreaView>
   );
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-export type CustomStyleFunc = (value: {
-  transform: {
-    translateX: any;
-    translateY: any;
-    matrix: any;
-    perspective: any;
-    rotate: any;
-    rotateX: any;
-    rotateY: any;
-    rotateZ: any;
-    scaleX: any;
-    scaleY: any;
-    skewX: any;
-    skewY: any;
-    scale: any;
-  };
-  width: any;
-  height: any;
-  backgroundColor: any;
-  fontSize: any;
-  color: any;
-}) => StyleProp<ViewStyle>;
 
 const TodoItem = () => {
   const transformY = useSharedValue(0);
@@ -122,9 +85,6 @@ const TodoItem = () => {
 
   const customStyle: CustomStyleFunc = (value) => {
     "worklet";
-
-    //TODO: Write a type function to suggest a value can modified to user
-    // Value type animation and return in view props
     return {
       transform: [{ translateX: withTiming(value.transform.translateX) }],
       backgroundColor: withTiming(value.backgroundColor),
@@ -174,18 +134,6 @@ const OpenContent = ({ setEndNode }: any) => {
         >
           Task 1
         </Text>
-        {/* <Image
-          source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-          style={{ width: 100, height: 100, resizeMode: "stretch" }}
-        /> */}
-        {/* <View
-          style={{
-            width: 50,
-            height: 100,
-            backgroundColor: "pink",
-            transform: [{ rotateX: "10deg" }, { translateX: 30 }],
-          }}
-        /> */}
       </TestNodeWrapper>
       <View style={{ height: 20 }} />
 
@@ -202,11 +150,7 @@ const OpenContent = ({ setEndNode }: any) => {
             height: 100,
             resizeMode: "stretch",
 
-            transform: [
-              // { rotateX: "10deg" },
-              // { rotateZ: "0deg" },
-              { translateX: 30 },
-            ],
+            transform: [{ translateX: 30 }],
           }}
         />
       </TestNodeWrapper>
@@ -244,27 +188,6 @@ const ClosedContent = ({ setStartNode }) => {
           >
             Task 1
           </Text>
-
-          {/* <Image
-            source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-            style={{ width: 100, height: 50, resizeMode: "stretch" }}
-          /> */}
-
-          {/* <View
-            style={[
-              {
-                width: 50,
-                height: 50,
-                backgroundColor: "black",
-                transform: [{ translateX: 45 }, { rotateX: "100deg" }],
-              },
-            ]}
-            // style={{
-            //   width: 50,
-            //   height: 50,
-            //   backgroundColor: "red",
-            // }}
-          /> */}
         </TestNodeWrapper>
 
         <TestNodeWrapper
@@ -273,7 +196,6 @@ const ClosedContent = ({ setStartNode }) => {
           }}
           shareId={"text2"}
         >
-          {/* <Text style={{ color: "green", marginTop: 16 }}>Uu tien cao</Text> */}
           <Image
             source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
             style={{
