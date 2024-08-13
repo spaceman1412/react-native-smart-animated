@@ -1,0 +1,28 @@
+{
+  "name": "react-native-shared-element-component",
+  "version": "1.0.1",
+  "description": "This is a shared element component that allow two component to animation between each other",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spaceman1412/react-native-shared-element-component.git"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "spaceman1412",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spaceman1412/react-native-shared-element-component.git/issues"
+  },
+  "homepage": "https://github.com/spaceman1412/react-native-shared-element-component.git#readme",
+  "devDependencies": {
+    "@types/node": "^22.2.0",
+    "react": "^18.2.0",
+    "react-native": "^0.74.5",
+    "react-native-reanimated": "^3.15.0"
+  }
+}
