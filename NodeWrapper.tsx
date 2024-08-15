@@ -1,7 +1,7 @@
 import React, { cloneElement, ReactElement, useEffect, useRef } from "react";
 import { Children } from "react";
 
-type TestNodeProps = {
+type NodeProps = {
   onNode: (node: Node) => void;
   shareId: string;
   children: React.ReactNode;
@@ -13,7 +13,7 @@ export type Node = {
   shareId: string;
 };
 
-export const TestNodeWrapper: React.FC<TestNodeProps> = ({
+export const NodeWrapper: React.FC<NodeProps> = ({
   onNode,
   children,
   shareId,

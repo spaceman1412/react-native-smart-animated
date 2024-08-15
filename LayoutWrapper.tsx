@@ -15,14 +15,11 @@ import {
 } from "react-native";
 import Animated, {
   interpolateColor,
-  runOnJS,
   SharedValue,
-  useAnimatedReaction,
   useAnimatedStyle,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { Node } from "./TestNodeWrapper";
+import { Node } from "./NodeWrapper";
 
 export type CustomStyleFunc = (value: {
   transform: {
@@ -73,7 +70,7 @@ type OneNodeProps = {
   endNode: Node;
   passRef: React.RefObject<any>;
   isEnabled: SharedValue<boolean>;
-  customStyle?: (value: any) => any;
+  customStyle?: CustomStyleFunc;
 };
 
 const OneNode: React.FC<OneNodeProps> = ({
@@ -287,8 +284,8 @@ const OneNode: React.FC<OneNodeProps> = ({
               value = {
                 ...value,
                 [keyStart]: isEnabled?.value
-                  ? withTiming(endNode[keyEnd], { duration: 500 })
-                  : withTiming(startNode[keyStart], { duration: 500 }),
+                  ? withTiming(endNode[keyEnd])
+                  : withTiming(startNode[keyStart]),
               };
             }
           });
@@ -319,7 +316,7 @@ const OneNode: React.FC<OneNodeProps> = ({
     };
 
     let transformFinal = (() => {
-      let final = [];
+      let final: any[] = [];
       if (Object.keys(transformTempt).length > 0) {
         for (const [key, value] of Object.entries(transformTempt)) {
           final.push({
@@ -335,7 +332,7 @@ const OneNode: React.FC<OneNodeProps> = ({
       if (color) {
         value = {
           ...value,
-          backgroundColor: withTiming(color, { duration: 500 }),
+          backgroundColor: withTiming(color),
         };
       }
 
@@ -343,16 +340,16 @@ const OneNode: React.FC<OneNodeProps> = ({
         value = {
           ...value,
           fontSize: isEnabled?.value
-            ? withTiming(endNodeTransform.fontSize, { duration: 500 })
-            : withTiming(startNodeTransform.fontSize, { duration: 500 }),
+            ? withTiming(endNodeTransform.fontSize)
+            : withTiming(startNodeTransform.fontSize),
         };
       }
       if (startNodeTransform?.color && endNodeTransform?.color) {
         value = {
           ...value,
           color: isEnabled?.value
-            ? withTiming(endNodeTransform.color, { duration: 500 })
-            : withTiming(startNodeTransform.color, { duration: 500 }),
+            ? withTiming(endNodeTransform.color)
+            : withTiming(startNodeTransform.color),
         };
       }
 
@@ -363,12 +360,12 @@ const OneNode: React.FC<OneNodeProps> = ({
       transform: transformFinal,
       width:
         isEnabled?.value && endNodeLayout
-          ? withTiming(endNodeLayout.width, { duration: 500 })
-          : withTiming(startNodeLayout?.width, { duration: 500 }),
+          ? withTiming(endNodeLayout.width)
+          : withTiming(startNodeLayout?.width),
       height:
         isEnabled?.value && endNodeLayout
-          ? withTiming(endNodeLayout.height, { duration: 500 })
-          : withTiming(startNodeLayout?.height, { duration: 500 }),
+          ? withTiming(endNodeLayout.height)
+          : withTiming(startNodeLayout?.height),
       ...transformStyle,
       ...spreadStyle,
     };
@@ -409,6 +406,19 @@ const OneNode: React.FC<OneNodeProps> = ({
     if (startNode) {
       const handleProps = (props: any, type: "start" | "end") => {
         // Style handler
+
+        const updateTransform = (key: string, value: any) => {
+          type === "start"
+            ? setStartNodeTransform((prevState) => ({
+                ...prevState,
+                [key]: value,
+              }))
+            : setEndNodeTransform((prevState) => ({
+                ...prevState,
+                [key]: value,
+              }));
+        };
+
         for (const key in props) {
           if (key === "style") {
             if (props.style.length > 0) {
@@ -421,108 +431,36 @@ const OneNode: React.FC<OneNodeProps> = ({
               }
 
               if (style?.backgroundColor) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      backgroundColor: style?.backgroundColor?.toString(),
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      backgroundColor: style?.backgroundColor?.toString(),
-                    }));
+                updateTransform(
+                  "backgroundColor",
+                  style?.backgroundColor?.toString()
+                );
               }
               if (style.transform) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      transform: style.transform,
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      transform: style.transform,
-                    }));
+                updateTransform("transform", style.transform);
               }
 
-              if (style?.backgroundColor) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      backgroundColor: style?.backgroundColor?.toString(),
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      backgroundColor: style?.backgroundColor?.toString(),
-                    }));
-              }
               if (style.fontSize) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      fontSize: style.fontSize,
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      fontSize: style.fontSize,
-                    }));
+                updateTransform("fontSize", style.fontSize);
               }
 
               if (style.color) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      color: style.color?.toString(),
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      color: style.color?.toString(),
-                    }));
+                updateTransform("color", style.color?.toString());
               }
             } else {
               // Handle single style
               if (props.style.backgroundColor) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      backgroundColor: props.style.backgroundColor,
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      backgroundColor: props.style.backgroundColor,
-                    }));
+                updateTransform("backgroundColor", props.style.backgroundColor);
               }
               if (props.style.transform) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      transform: props.style.transform,
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      transform: props.style.transform,
-                    }));
+                updateTransform("transform", props.style.transform);
               }
               if (props.style.fontSize) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      fontSize: props.style.fontSize,
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      fontSize: props.style.fontSize,
-                    }));
+                updateTransform("fontSize", props.style.fontSize);
               }
 
               if (props.style.color) {
-                type === "start"
-                  ? setStartNodeTransform((prevState) => ({
-                      ...prevState,
-                      color: props.style.color,
-                    }))
-                  : setEndNodeTransform((prevState) => ({
-                      ...prevState,
-                      color: props.style.color,
-                    }));
+                updateTransform("color", props.style.color);
               }
             }
           }
@@ -593,15 +531,11 @@ export const LayoutWrapper = ({
   const ref = useRef<View>(null);
 
   const animatedStyleStartNode = useAnimatedStyle(() => ({
-    opacity: isEnabled.value
-      ? withTiming(0, { duration: 500 })
-      : withTiming(1, { duration: 500 }),
+    opacity: isEnabled.value ? withTiming(0) : withTiming(1),
   }));
 
   const animatedStyleEndNode = useAnimatedStyle(() => ({
-    opacity: isEnabled.value
-      ? withTiming(1, { duration: 500 })
-      : withTiming(0, { duration: 500 }),
+    opacity: isEnabled.value ? withTiming(1) : withTiming(0),
   }));
 
   const StartNodeComponent = useCallback(

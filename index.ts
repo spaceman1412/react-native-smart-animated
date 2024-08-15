@@ -1,4 +1,4 @@
-import { TestNodeWrapper, Node } from "./TestNodeWrapper";
+import { NodeWrapper, Node } from "./NodeWrapper";
 import { CustomStyleFunc, LayoutWrapper } from "./LayoutWrapper";
 
-export { LayoutWrapper, TestNodeWrapper, CustomStyleFunc, Node };
+export { LayoutWrapper, NodeWrapper, CustomStyleFunc, Node };
