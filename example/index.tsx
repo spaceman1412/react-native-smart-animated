@@ -11,18 +11,12 @@ import {
 } from "react-native";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 
-import {
-  TestNodeWrapper,
-  Node,
-  LayoutWrapper,
-  CustomStyleFunc,
-} from "../index";
+import { NodeWrapper, Node, LayoutWrapper, CustomStyleFunc } from "../index";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView
-        style={{}}
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: "center",
@@ -122,7 +116,7 @@ const OpenContent = ({ setEndNode }: any) => {
       </View>
 
       <View style={{ height: 20 }} />
-      <TestNodeWrapper
+      <NodeWrapper
         onNode={(node) => {
           setEndNode((prev) => [...prev, node]);
         }}
@@ -134,10 +128,10 @@ const OpenContent = ({ setEndNode }: any) => {
         >
           Task 1
         </Text>
-      </TestNodeWrapper>
+      </NodeWrapper>
       <View style={{ height: 20 }} />
 
-      <TestNodeWrapper
+      <NodeWrapper
         onNode={(node) => {
           setEndNode((prev) => [...prev, node]);
         }}
@@ -153,7 +147,7 @@ const OpenContent = ({ setEndNode }: any) => {
             transform: [{ translateX: 30 }],
           }}
         />
-      </TestNodeWrapper>
+      </NodeWrapper>
       <Button title="Xong" />
     </Animated.View>
   );
@@ -173,7 +167,7 @@ const ClosedContent = ({ setStartNode }) => {
       <View style={{ marginStart: 16 }}>
         {/* //TODO: Create a wrapper component for the user more convenient */}
 
-        <TestNodeWrapper
+        <NodeWrapper
           onNode={(node) => {
             setStartNode((prev) => [...prev, node]);
           }}
@@ -188,9 +182,9 @@ const ClosedContent = ({ setStartNode }) => {
           >
             Task 1
           </Text>
-        </TestNodeWrapper>
+        </NodeWrapper>
 
-        <TestNodeWrapper
+        <NodeWrapper
           onNode={(node) => {
             setStartNode((prev) => [...prev, node]);
           }}
@@ -205,7 +199,7 @@ const ClosedContent = ({ setStartNode }) => {
               transform: [{ translateX: 45 }],
             }}
           />
-        </TestNodeWrapper>
+        </NodeWrapper>
       </View>
     </Animated.View>
   );

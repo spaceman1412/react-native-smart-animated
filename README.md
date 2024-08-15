@@ -1,1 +1,1 @@
-# react-native-shared-element-component
+# react-native-smart-animated

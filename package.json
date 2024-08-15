@@ -1,14 +1,14 @@
 {
-  "name": "react-native-shared-element-component",
+  "name": "react-native-smart-animated",
   "version": "1.0.3",
-  "description": "This is a shared element component that allow two component to animation between each other",
+  "description": "This is a smart shared element component that allow two component to animation between each other",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spaceman1412/react-native-shared-element-component.git"
+    "url": "git+https://github.com/spaceman1412/react-native-smart-animated.git"
   },
   "keywords": [
     "react-native"
@@ -16,9 +16,9 @@
   "author": "spaceman1412",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/spaceman1412/react-native-shared-element-component.git/issues"
+    "url": "https://github.com/spaceman1412/react-native-smart-animated/issues"
   },
-  "homepage": "https://github.com/spaceman1412/react-native-shared-element-component.git#readme",
+  "homepage": "https://github.com/spaceman1412/react-native-smart-animated#readme",
   "devDependencies": {
     "@types/node": "^22.2.0",
     "react": "^18.2.0",
